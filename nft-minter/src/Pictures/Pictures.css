@@ -1,0 +1,22 @@
+#pictureContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2%;
+    text-align: center;
+    flex-direction: column;
+    gap: 3em;
+}
+
+#pictureButtonValidation {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    justify-content: center;
+    align-items: center;
+     margin-bottom: 5em;
+}
+
+#formatPictureMessage {
+    color:red;
+}

@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
 import Pictures from './Pictures';
 import axios from 'axios';
+import 'NftForm.css';
 
 function NftForm(props) {
 
