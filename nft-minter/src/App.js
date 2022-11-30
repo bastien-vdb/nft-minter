@@ -1,10 +1,10 @@
-import logo from './logo.svg';
+import Box1 from './Box1';
 import './App.css';
 
 function App() {
   return (
     <div>
-      Halo ah
+      <Box1/>
     </div>
   );
 }
