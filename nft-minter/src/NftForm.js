@@ -1,21 +1,30 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
 import Pictures from './Pictures';
-import { display } from '@mui/system';
 
 function NftForm(props) {
+
+    const [picture, setPicture] = useState(null);
+    const [pictureUrl, setPictureUrl] = useState(null);
+    
+    const uploadNftPicture=(e)=>{
+        const file = e.target?.files[0];
+        setPictureUrl(URL.createObjectURL(file));
+        setPicture(file);
+    }
+
     return (
-        <div style={{ display: 'flex', justifyContent:'center', alignItems:'center', marginTop:'7em', flexWrap:'wrap' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '7em', flexWrap: 'wrap' }}>
 
             <div style={{ width: '45%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2em', margin: '2em' }}>
 
-                <div style={{ display: 'flex', flexDirection:'column', gap: '0.5em', justifyContent: 'center', alignItems:'center', marginBottom:'5em' }}>
-                    <p style={{color:'red'}}>Upload a picture (Format: png/jpg/jpeg)</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5em', justifyContent: 'center', alignItems: 'center', marginBottom: '5em' }}>
+                    <p style={{ color: 'red' }}>Upload a picture (Format: png/jpg/jpeg)</p>
                     <Button variant="contained" component="label">
                         Upload
-                        <input hidden accept="image/*" multiple type="file" />
+                        <input onChange={uploadNftPicture} hidden accept="image/*" multiple type="file" />
                     </Button>
                 </div>
 
@@ -36,7 +45,7 @@ function NftForm(props) {
             </div>
 
             <div style={{ width: '45%', display: 'flex', height: '100%', margin: '2em', justifyContent: 'center', alignItems: 'center' }}>
-                <Pictures />
+                <Pictures picture={picture} pictureUrl={pictureUrl} />
             </div>
 
         </div>
