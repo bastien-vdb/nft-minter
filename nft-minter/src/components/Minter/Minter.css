@@ -1,0 +1,22 @@
+#authentification {
+    display: flex;
+    justify-content: center;
+    padding: 3em;
+  }
+  
+  #authentification > div {
+    margin-top: 3em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #walletDisconnectButton {
+    padding: 0.5em 3em;
+    color: white;
+    font-weight: bold;
+    background-color: black;
+    border-radius: 15%;
+    margin: 2em;
+  }

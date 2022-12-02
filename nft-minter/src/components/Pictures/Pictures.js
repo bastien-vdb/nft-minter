@@ -1,47 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import axios from 'axios';
 import SendIcon from '@mui/icons-material/Send';
 import NftForm from '../NftForm/NftForm';
 import './Pictures.css';
+import { getHash } from '../../hooks/usePicture';
 
 function Pictures() {
 
     const [hidePictureUpload, setHidePictureUpload] = useState(false);
 
     const [imageUrlIpfs, setImageUrlIpfs] = useState(''); //ipfs url be added to a json file and send to Pinata
+    const [imageUrlUrl, setImageUrlUrl] = useState(''); //ipfs url be added to a json file and send to Pinata
     const [pictureUrl, setPictureUrl] = useState(null); //To show on our website
     const [picture, setPicture] = useState(null); //File to be sent to Pinata
-
-    const handleSendPictureToIpfs = async () => {
-        const formData = new FormData();
-        formData.append('file', picture);
-
-        try {
-            const resFile = await axios({
-                method: "post",
-                url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
-                data: formData,
-                headers: {
-                    'pinata_api_key': `${process.env.REACT_APP_PINATA_API_KEY}`,
-                    'pinata_secret_api_key': `${process.env.REACT_APP_PINATA_API_SECRET}`,
-                    "Content-Type": "multipart/form-data"
-                },
-            });
-
-            const ImgHash = `ipfs://${resFile.data.IpfsHash}`;
-            setImageUrlIpfs(ImgHash);
-            setHidePictureUpload(true);
-        }
-        catch (error) {
-            console.log('Erreur lors de l upload');
-            console.log(error);
-        }
-    }
+    const [error, setError] = useState(null);
 
     const uploadNftPicture = (e) => {
         const file = e.target?.files[0];
@@ -49,9 +25,21 @@ function Pictures() {
         setPicture(file);
     }
 
+    const handleSendPictureToIpfs = async () => {
+        const { hashUrl, hashIpfs, error } = await getHash(picture);
+        if (!error) {
+            setImageUrlIpfs(hashIpfs);
+            setImageUrlUrl(hashUrl);
+            setHidePictureUpload(true);
+        }
+        else {
+            setError(error);
+        }
+    }
+
     return (
         <>
-            <div id='pictureContainer' style={{display: hidePictureUpload && 'none'}}>
+            <div id='pictureContainer' style={{ display: hidePictureUpload && 'none' }}>
                 <Card sx={{ maxWidth: 345 }}>
                     <CardMedia
                         component="img"
@@ -86,8 +74,8 @@ function Pictures() {
                     </div>
                 }
             </div>
-
-            {imageUrlIpfs && <NftForm imageUrlIpfs={imageUrlIpfs} pictureUrl={pictureUrl} />}
+            {error && error}
+            {imageUrlIpfs && <NftForm imageUrlIpfs={imageUrlIpfs} pictureUrl={pictureUrl} imageUrlUrl={imageUrlUrl} />}
         </>
     );
 }

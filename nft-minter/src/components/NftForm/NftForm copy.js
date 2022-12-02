@@ -5,7 +5,7 @@ import SendIcon from '@mui/icons-material/Send';
 import axios from 'axios';
 import './NftForm.css';
 
-function NftForm({ imageUrlIpfs, pictureUrl }) {
+function NftForm({ imageUrlIpfs, pictureUrl, imageUrlUrl }) {
 
     const fieldName = useRef(null);
     const fieldDescription = useRef(null);
@@ -72,8 +72,12 @@ function NftForm({ imageUrlIpfs, pictureUrl }) {
                 <Button type='submit' variant="contained" endIcon={<SendIcon />}>
                     Send
                 </Button>
-                {tokenUriToVisit && 
-                <a href={tokenUriToVisit}>{tokenUriToVisit}</a>}
+                {tokenUriToVisit &&
+                    <div>
+                        <p>TokenUri: <a href={tokenUriToVisit}>{tokenUriToVisit}</a></p>
+                        <p>Image: <a href={imageUrlUrl}>{imageUrlUrl}</a></p>
+                    </div>
+                }
             </form>
         </div>
     );
