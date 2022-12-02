@@ -44,7 +44,7 @@ function Pictures() {
                     <CardMedia
                         component="img"
                         height="fit-contain"
-                        image={pictureUrl ? pictureUrl : "questionPic2.png"}
+                        image={pictureUrl ? pictureUrl : "nftpic.jpg"}
                         alt="green iguana"
                     />
                     <CardContent>
